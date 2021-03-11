@@ -9,10 +9,17 @@ prefix_question="🤖"
 prefix_done="✅"
 prefix_skipped="⏭ "
 prefix_warning="🟡"
+prefix_missing="❌"
+report_only=false
 
 apt_install() {
     package_name=$1
     ppa_dependency=$2
+
+    if [ $report_only ]; then
+        report_apt_installation $package_name
+        return
+    fi
 
     echo "$prefix_question Install '$package_name'?"
     read -r response
@@ -39,7 +46,13 @@ apt_install() {
 
 snap_install() {
     package_name=$1
-    is_classic="$2"
+    is_classic=$2
+
+    if [ $report_only ]; then
+        report_snap_installation $package_name
+        return
+    fi
+    
     echo "$prefix_question Install '$package_name'?"
     read -r response
     case $response in
@@ -85,10 +98,38 @@ setting() {
     echo
 }
 
+set_report_only() {
+    if [ "$1" = "report" ]; then
+        report_only=true
+    fi
+}
+
+report_apt_installation() {
+    package=$1
+
+    if [ $(dpkg-query -W -f='${Status}' $package 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
+        echo "$prefix_done $package"
+    else
+        echo "$prefix_missing $package"
+    fi
+}
+
+report_snap_installation() {
+    package=$1
+
+    if [ $(snap info $package 2>/dev/null | grep -c "installed") -eq 1 ]; then
+        echo "$prefix_done $package"
+    else
+        echo "$prefix_missing $package"
+    fi
+}
+
 main() {
-    echo "======================="
-    echo "📦 Package installation"
-    echo "=======================\n"
+    set_report_only "$1"
+
+    echo "==========="
+    echo "📦 Packages"
+    echo "===========\n"
     apt_install "alacritty" "ppa:mmstick76/alacritty"
     apt_install "ansible"
     apt_install "curl"
@@ -109,6 +150,10 @@ main() {
     snap_install "signal-desktop"
     snap_install "spotify"
     
+    if [ report_only ]; then
+        exit 0
+    fi
+
     echo
 
     echo "======================="
@@ -125,4 +170,4 @@ main() {
     echo "- set Eurkey in keyboard settings"
 }
 
-main
+main "$@"
