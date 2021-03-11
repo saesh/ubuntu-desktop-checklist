@@ -17,7 +17,7 @@ apt_install() {
     ppa_dependency=$2
 
     if [ $report_only ]; then
-        report_apt_installation $package_name
+        report_apt_installation "$package_name"
         return
     fi
 
@@ -26,10 +26,10 @@ apt_install() {
     case $response in
     [yY])
         if [ -n "$ppa_dependency" ]; then
-            eval $apt_add_repository $ppa_dependency
+            eval "$apt_add_repository" "$ppa_dependency"
         fi
 
-        eval $apt_install_command $package_name
+        eval "$apt_install_command" "$package_name"
         return_code=$?
         if [ "$return_code" -eq "0" ]; then
             echo "$prefix_done $package_name installed"
@@ -49,7 +49,7 @@ snap_install() {
     is_classic=$2
 
     if [ $report_only ]; then
-        report_snap_installation $package_name
+        report_snap_installation "$package_name"
         return
     fi
     
@@ -57,10 +57,10 @@ snap_install() {
     read -r response
     case $response in
     [yY])
-        if [ "is_classic" -eq "classic" ]; then
-            eval $snap_install_command $package_name --classic
+        if [ "$is_classic" == "classic" ]; then
+            eval "$snap_install_command" "$package_name" --classic
         else
-            eval $snap_install_command $package_name
+            eval "$snap_install_command" "$package_name"
         fi 
         return_code=$?
         if [ "$return_code" -eq "0" ]; then
@@ -83,7 +83,7 @@ setting() {
     read -r response
     case $response in
     [yY])
-        eval $activation_command
+        eval "$activation_command"
         return_code=$?
         if [ "$return_code" -eq "0" ]; then
             echo "$prefix_done Done"
@@ -107,7 +107,7 @@ set_report_only() {
 report_apt_installation() {
     package=$1
 
-    if [ $(dpkg-query -W -f='${Status}' $package 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
+    if [ "$(dpkg-query -W -f='${Status}' "$package" 2>/dev/null | grep -c "ok installed")" -eq 1 ]; then
         echo "$prefix_done $package"
     else
         echo "$prefix_missing $package"
@@ -117,7 +117,7 @@ report_apt_installation() {
 report_snap_installation() {
     package=$1
 
-    if [ $(snap info $package 2>/dev/null | grep -c "installed") -eq 1 ]; then
+    if [ "$(snap info "$package" 2>/dev/null | grep -c "installed")" -eq 1 ]; then
         echo "$prefix_done $package"
     else
         echo "$prefix_missing $package"
@@ -127,9 +127,9 @@ report_snap_installation() {
 main() {
     set_report_only "$1"
 
-    echo "==========="
-    echo "📦 Packages"
-    echo "===========\n"
+    echo   "==========="
+    echo   "📦 Packages"
+    printf "===========\n"
     apt_install "alacritty" "ppa:mmstick76/alacritty"
     apt_install "ansible"
     apt_install "curl"
@@ -150,15 +150,15 @@ main() {
     snap_install "signal-desktop"
     snap_install "spotify"
     
-    if [ report_only ]; then
+    if [ $report_only ]; then
         exit 0
     fi
 
     echo
 
-    echo "======================="
-    echo "🎛  System settings"
-    echo "=======================\n"
+    echo   "==================="
+    echo   "🎛  System settings"
+    printf "===================\n"
     setting "Show all input sources in gnome settings?\n(Required for Eurkey to show up)" "gsettings set org.gnome.desktop.input-sources show-all-sources true"
     setting "Hide the dock?" "gsettings set org.gnome.shell.extensions.dash-to-dock dock-fixed false"
     setting "Set system clock to local time?\n(Required for correct time in Windows in dual-boot environment)" "timedatectl set-local-rtc 1 --adjust-system-clock"
