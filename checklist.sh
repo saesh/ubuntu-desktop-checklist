@@ -16,7 +16,7 @@ apt_install() {
     package_name=$1
     ppa_dependency=$2
 
-    if [ $report_only ]; then
+    if [ $report_only = true ]; then
         report_apt_installation "$package_name"
         return
     fi
@@ -48,7 +48,7 @@ snap_install() {
     package_name=$1
     is_classic=$2
 
-    if [ $report_only ]; then
+    if [ $report_only = true ]; then
         report_snap_installation "$package_name"
         return
     fi
@@ -57,7 +57,7 @@ snap_install() {
     read -r response
     case $response in
     [yY])
-        if [ "$is_classic" == "classic" ]; then
+        if [ "$is_classic" = "classic" ]; then
             eval "$snap_install_command" "$package_name" --classic
         else
             eval "$snap_install_command" "$package_name"
@@ -150,7 +150,7 @@ main() {
     snap_install "signal-desktop"
     snap_install "spotify"
     
-    if [ $report_only ]; then
+    if [ $report_only = true ]; then
         exit 0
     fi
 
