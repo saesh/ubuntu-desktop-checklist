@@ -124,6 +124,46 @@ report_snap_installation() {
     fi
 }
 
+install_iosevka_font() {
+    package_name="Iosevka font"
+    echo "$prefix_question Install '$package_name'?"
+    read -r response
+    case $response in
+    [yY])
+        _download_and_unzip "https://github.com/be5invis/Iosevka/releases/download/v5.0.5/ttf-iosevka-ss08-5.0.5.zip" "$HOME/.local/share/fonts"
+        _download_and_unzip "https://github.com/be5invis/Iosevka/releases/download/v5.0.5/ttf-iosevka-term-ss08-5.0.5.zip" "$HOME/.local/share/fonts"
+        return_code=$?
+        if [ "$return_code" -eq "0" ]; then
+            echo "$prefix_done $package_name installed"
+        else 
+            echo "$prefix_warning $package_name could not be installed"
+        fi
+        ;;
+    *)
+        echo "$prefix_skipped $package_name installation skipped"
+        ;;
+    esac
+    echo
+}
+
+_download_and_unzip() {
+    url=$1
+    target_dir=$2
+    download_dir=~
+    download_filename="download.zip"
+
+    create_dir "$target_dir"
+
+    wget -O "$download_dir/$download_filename" -q "$url" && \
+    unzip -d "$target_dir" "$download_dir/$download_filename" && \
+    rm "$download_dir/$download_filename"
+}
+
+create_dir() {
+    dir=$1
+    mkdir -p "$dir"
+}
+
 main() {
     set_report_only "$1"
 
@@ -153,6 +193,8 @@ main() {
     if [ $report_only = true ]; then
         exit 0
     fi
+
+    install_iosevka_font
 
     echo
 
