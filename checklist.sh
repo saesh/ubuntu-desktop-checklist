@@ -3,6 +3,7 @@
 set -e
 
 apt_install_command="sudo apt-get -qq -y install"
+apt_add_repository="sudo apt-add-repository -y"
 snap_install_command="snap install"
 prefix_question="🤖"
 prefix_done="✅"
@@ -11,10 +12,16 @@ prefix_warning="🟡"
 
 apt_install() {
     package_name=$1
+    ppa_dependency=$2
+
     echo "$prefix_question Install '$package_name'?"
     read -r response
     case $response in
     [yY])
+        if [ -n "$ppa_dependency" ]; then
+            eval $apt_add_repository $ppa_dependency
+        fi
+
         eval $apt_install_command $package_name
         return_code=$?
         if [ "$return_code" -eq "0" ]; then
@@ -82,10 +89,12 @@ main() {
     echo "======================="
     echo "📦 Package installation"
     echo "=======================\n"
+    apt_install "alacritty" "ppa:mmstick76/alacritty"
     apt_install "ansible"
     apt_install "curl"
     apt_install "docker"
     apt_install "docker-compose"
+    apt_install "fish" "ppa:fish-shell/release-3"
     apt_install "ffmpeg"
     apt_install "fonts-mononoki"
     apt_install "git"
