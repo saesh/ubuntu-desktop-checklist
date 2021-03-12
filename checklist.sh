@@ -16,32 +16,39 @@ apt_install() {
     package_name=$1
     ppa_dependency=$2
 
-    if [ $report_only = true ]; then
+    if $report_only; then
         report_apt_installation "$package_name"
         return
     fi
 
-    echo "$prefix_question Install '$package_name'?"
-    read -r response
-    case $response in
-    [yY])
+    if _should_proceed "Install $package_name"; then
         if [ -n "$ppa_dependency" ]; then
             eval "$apt_add_repository" "$ppa_dependency"
         fi
 
-        _install_with_apt "$package_name"
-        return_code=$?
-        if [ "$return_code" -eq "0" ]; then
+        if _install_with_apt "$package_name"; then
             echo "$prefix_done $package_name installed"
         else 
             echo "$prefix_warning $package_name could not be installed"
         fi
+    else
+        echo "$prefix_skipped $package_name installation skipped"
+    fi
+}
+
+_should_proceed() {
+    question=$1
+
+    echo "$prefix_question $question?"
+    read -r response
+    case $response in
+    [yY])
+        return 0
         ;;
     *)
-        echo "$prefix_skipped $package_name installation skipped"
+        return 1
         ;;
     esac
-    echo
 }
 
 _install_with_apt() {
@@ -58,10 +65,7 @@ snap_install() {
         return
     fi
     
-    echo "$prefix_question Install '$package_name'?"
-    read -r response
-    case $response in
-    [yY])
+    if _should_proceed "Install $package_name"; then
         if [ "$is_classic" = "classic" ]; then
             eval "$snap_install_command" "$package_name" --classic
         else
@@ -73,21 +77,15 @@ snap_install() {
         else 
             echo "$prefix_warning $package_name could not be installed"
         fi
-        ;;
-    *)
+    else
         echo "$prefix_skipped $package_name installation skipped"
-        ;;
-    esac
-    echo
+    fi
 }
 
 setting() {
     question=$1
     activation_command=$2
-    echo "$prefix_question $question"
-    read -r response
-    case $response in
-    [yY])
+    if _should_proceed "$question"; then
         eval "$activation_command"
         return_code=$?
         if [ "$return_code" -eq "0" ]; then
@@ -95,12 +93,9 @@ setting() {
         else 
             echo "$prefix_warning Something went wrong"
         fi
-        ;;
-    *)
+    else
         echo "$prefix_skipped Skipped"
-        ;;
-    esac
-    echo
+    fi
 }
 
 set_report_only() {
@@ -131,10 +126,7 @@ report_snap_installation() {
 
 install_iosevka_font() {
     package_name="Iosevka font"
-    echo "$prefix_question Install '$package_name'?"
-    read -r response
-    case $response in
-    [yY])
+    if _should_proceed "Install $package_name"; then
         _download_and_unzip "https://github.com/be5invis/Iosevka/releases/download/v5.0.5/ttf-iosevka-ss08-5.0.5.zip" "$HOME/.local/share/fonts"
         _download_and_unzip "https://github.com/be5invis/Iosevka/releases/download/v5.0.5/ttf-iosevka-term-ss08-5.0.5.zip" "$HOME/.local/share/fonts"
         return_code=$?
@@ -143,19 +135,21 @@ install_iosevka_font() {
         else 
             echo "$prefix_warning $package_name could not be installed"
         fi
-        ;;
-    *)
+    else
         echo "$prefix_skipped $package_name installation skipped"
-        ;;
-    esac
-    echo
+    fi
 }
 
 install_pop_os_shell() {
     dependency=$1
-    _install_with_apt "$dependency"
-    git clone https://github.com/pop-os/shell.git ~/pop-os-shell
-    cd ~/pop-os-shell && make local-install && cd -
+    package_name="PopOS Shell"
+    if _should_proceed "Install $package_name"; then
+        _install_with_apt "$dependency"
+        git clone https://github.com/pop-os/shell.git ~/pop-os-shell
+        cd ~/pop-os-shell && make local-install && cd -
+    else
+        echo "$prefix_skipped $package_name installation skipped"
+    fi
 }
 
 _download_and_unzip() {
