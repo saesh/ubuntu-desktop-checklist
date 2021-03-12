@@ -67,7 +67,7 @@ apt_install() {
         return
     fi
 
-    if _should_proceed "Install $package_name"; then
+    if _should_proceed "Install $package_name ($( _is_installed_with_apt "$package_name" && echo "$prefix_done" || echo "$prefix_missing" ))"; then
         if [ -n "$ppa_dependency" ]; then
             sudo apt-add-repository -y "$ppa_dependency"
         fi
@@ -91,7 +91,7 @@ snap_install() {
         return
     fi
     
-    if _should_proceed "Install $package_name"; then
+    if _should_proceed "Install $package_name ($( _is_installed_with_snap "$package_name" && echo "$prefix_done" || echo "$prefix_missing" ))"; then
         if [ "$is_classic" = "classic" ]; then
             snap install "$package_name" --classic
         else
