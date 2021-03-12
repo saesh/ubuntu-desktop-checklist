@@ -29,7 +29,7 @@ apt_install() {
             eval "$apt_add_repository" "$ppa_dependency"
         fi
 
-        eval "$apt_install_command" "$package_name"
+        _install_with_apt "$package_name"
         return_code=$?
         if [ "$return_code" -eq "0" ]; then
             echo "$prefix_done $package_name installed"
@@ -42,6 +42,11 @@ apt_install() {
         ;;
     esac
     echo
+}
+
+_install_with_apt() {
+    package_name=$1
+    eval "$apt_install_command" "$package_name"
 }
 
 snap_install() {
@@ -146,6 +151,13 @@ install_iosevka_font() {
     echo
 }
 
+install_pop_os_shell() {
+    dependency=$1
+    _install_with_apt "$dependency"
+    git clone https://github.com/pop-os/shell.git ~/pop-os-shell
+    cd ~/pop-os-shell && make local-install && cd -
+}
+
 _download_and_unzip() {
     url=$1
     target_dir=$2
@@ -195,6 +207,7 @@ main() {
     fi
 
     install_iosevka_font
+    install_pop_os_shell "node-typescript"
 
     echo
 
