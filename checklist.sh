@@ -41,7 +41,11 @@ main() {
 
     install_iosevka_font
     install_pop_os_shell "node-typescript"
-
+    
+    install_vscode_extensions "vscode-icons-team.vscode-icons" \
+                              "sainnhe.sonokai" \
+                              "golang.go" \
+                              "ms-azuretools.vscode-docker"
     echo
 
     echo   "==================="
@@ -147,6 +151,24 @@ install_pop_os_shell() {
         _install_with_apt "$dependency"
         git clone https://github.com/pop-os/shell.git ~/pop-os-shell
         cd ~/pop-os-shell && make local-install && cd -
+    else
+        echo "$prefix_skipped $package_name installation skipped"
+    fi
+}
+
+install_vscode_extensions() {
+    package_name="VScode extensions"
+    
+    if ! _is_installed_with_snap "code"; then
+        return 0
+    fi
+
+    if _should_proceed "Install $package_name"; then
+        for extension in "$@"
+        do
+            code --install-extension "$extension" 2>/dev/null
+            echo "$prefix_done $package_name $extension installed"
+        done
     else
         echo "$prefix_skipped $package_name installation skipped"
     fi
