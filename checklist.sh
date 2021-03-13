@@ -179,10 +179,21 @@ install_vscode_extensions() (
 
 install_fzf() (
     package_name="fzf"
+    fd_version="8.2.1"
+    bat_version="0.18.0"
+
     if _should_proceed "Install $package_name"; then
-        git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf 2>/dev/null
-        ~/.fzf/install --completion --key-bindings --update-rc
-        echo "$prefix_done $package_name installed"
+        # fzf
+        git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install --completion --key-bindings --update-rc || echo "$package_name already installed"
+        
+        # fd for fzf.fish
+        _download_and_dpkg "https://github.com/sharkdp/fd/releases/download/v${fd_version}/fd-musl_${fd_version}_amd64.deb"
+
+        # bat for fzf.fish
+        _download_and_dpkg "https://github.com/sharkdp/bat/releases/download/v${bat_version}/bat-musl_${bat_version}_amd64.deb"
+        _link_dotfile "dotfiles/bat" "$HOME/.config/bat/config"
+
+        echo "$prefix_done $package_name, fd, bat installed"
     else
         echo "$prefix_skipped $package_name installation skipped"
     fi
@@ -260,6 +271,25 @@ _download_and_unzip() (
     wget -O "$download_dir/$download_filename" -q "$url" && \
     unzip -d "$target_dir" "$download_dir/$download_filename" && \
     rm "$download_dir/$download_filename"
+)
+
+_download_and_dpkg() (
+    url=$1
+    download_filename="$(mktemp)"
+
+    wget -O "$download_filename" -q "$url" && \
+    sudo dpkg -i "$download_filename"
+    rm "$download_filename"
+)
+
+_link_dotfile() (
+    from=$1
+    to=$2
+    target_path=$(dirname "$to")
+    
+    mkdir -p "$target_path"
+
+    ln -s "$from" "$to"
 )
 
 main "$@"
