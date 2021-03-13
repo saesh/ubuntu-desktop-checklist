@@ -191,7 +191,7 @@ install_fzf() (
 
         # bat for fzf.fish
         _download_and_dpkg "https://github.com/sharkdp/bat/releases/download/v${bat_version}/bat-musl_${bat_version}_amd64.deb"
-        _link_dotfile "dotfiles/bat" "$HOME/.config/bat/config"
+        _link_dotfile "$(pwd)/dotfiles/bat" "$HOME/.config/bat/config"
 
         echo "$prefix_done $package_name, fd, bat installed"
     else
