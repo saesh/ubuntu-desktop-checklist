@@ -62,7 +62,7 @@ main() {
     echo "- set Eurkey in keyboard settings"
 }
 
-apt_install() {
+apt_install() (
     package_name=$1
     ppa_dependency=$2
 
@@ -84,9 +84,9 @@ apt_install() {
     else
         echo "$prefix_skipped $package_name installation skipped"
     fi
-}
+)
 
-snap_install() {
+snap_install() (
     package_name=$1
     is_classic=$2
 
@@ -110,9 +110,9 @@ snap_install() {
     else
         echo "$prefix_skipped $package_name installation skipped"
     fi
-}
+)
 
-setting() {
+setting() (
     question=$1
     activation_command=$2
     if _should_proceed "$question"; then
@@ -126,9 +126,9 @@ setting() {
     else
         echo "$prefix_skipped Skipped"
     fi
-}
+)
 
-install_iosevka_font() {
+install_iosevka_font() (
     package_name="Iosevka font"
     if _should_proceed "Install $package_name"; then
         _download_and_unzip "https://github.com/be5invis/Iosevka/releases/download/v5.0.5/ttf-iosevka-ss08-5.0.5.zip" "$HOME/.local/share/fonts"
@@ -142,9 +142,9 @@ install_iosevka_font() {
     else
         echo "$prefix_skipped $package_name installation skipped"
     fi
-}
+)
 
-install_pop_os_shell() {
+install_pop_os_shell() (
     dependency=$1
     package_name="PopOS Shell"
     if _should_proceed "Install $package_name"; then
@@ -154,9 +154,9 @@ install_pop_os_shell() {
     else
         echo "$prefix_skipped $package_name installation skipped"
     fi
-}
+)
 
-install_vscode_extensions() {
+install_vscode_extensions() (
     package_name="VScode extensions"
     
     if ! _is_installed_with_snap "code"; then
@@ -172,15 +172,15 @@ install_vscode_extensions() {
     else
         echo "$prefix_skipped $package_name installation skipped"
     fi
-}
+)
 
-set_report_only() {
+set_report_only() (
     if [ "$1" = "report" ]; then
         report_only=true
     fi
-}
+)
 
-report_apt_installation() {
+report_apt_installation() (
     package_name=$1
 
     if _is_installed_with_apt "$package_name"; then
@@ -188,9 +188,9 @@ report_apt_installation() {
     else
         echo "$prefix_missing $package_name"
     fi
-}
+)
 
-report_snap_installation() {
+report_snap_installation() (
     package_name=$1
 
     if _is_installed_with_snap "$package_name"; then
@@ -198,9 +198,9 @@ report_snap_installation() {
     else
         echo "$prefix_missing $package_name"
     fi
-}
+)
 
-_should_proceed() {
+_should_proceed() (
     question=$1
 
     echo "$prefix_question $question?"
@@ -213,28 +213,28 @@ _should_proceed() {
         return 1
         ;;
     esac
-}
+)
 
-_install_with_apt() {
+_install_with_apt() (
     package_name=$1
     sudo apt-get -qq -y install "$package_name"
-}
+)
 
-_is_installed_with_apt() {
+_is_installed_with_apt() (
     package_name=$1
     # flip 1 and 0; grep count of 1 means it is installed; thus 0 for success should be returned
     count="$(dpkg-query -W -f='${Status}' "$package_name" 2>/dev/null | grep -c "ok installed")"
     return "$((1 - count))"
-}
+)
 
-_is_installed_with_snap() {
+_is_installed_with_snap() (
     package_name=$1
     # flip 1 and 0; grep count of 1 means it is installed; thus 0 for success should be returned
     count="$(snap info "$package_name" 2>/dev/null | grep -c "installed")"
     return "$((1 - count))"
-}
+)
 
-_download_and_unzip() {
+_download_and_unzip() (
     url=$1
     target_dir=$2
     download_dir=~
@@ -245,6 +245,6 @@ _download_and_unzip() {
     wget -O "$download_dir/$download_filename" -q "$url" && \
     unzip -d "$target_dir" "$download_dir/$download_filename" && \
     rm "$download_dir/$download_filename"
-}
+)
 
 main "$@"
