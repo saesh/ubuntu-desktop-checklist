@@ -46,6 +46,9 @@ main() {
                               "sainnhe.sonokai" \
                               "golang.go" \
                               "ms-azuretools.vscode-docker"
+
+    install_fzf
+
     echo
 
     echo   "==================="
@@ -172,6 +175,18 @@ install_vscode_extensions() (
     else
         echo "$prefix_skipped $package_name installation skipped"
     fi
+)
+
+install_fzf() (
+    package_name="fzf"
+    if _should_proceed "Install $package_name"; then
+        git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf 2>/dev/null
+        ~/.fzf/install --completion --key-bindings --update-rc
+        echo "$prefix_done $package_name installed"
+    else
+        echo "$prefix_skipped $package_name installation skipped"
+    fi
+    echo
 )
 
 set_report_only() (
