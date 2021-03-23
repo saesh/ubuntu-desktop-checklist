@@ -30,6 +30,10 @@ main() {
     apt_install "htop"
     apt_install "vim"
 
+    gnome_extension_install "caffeine@patapon.info" "https://extensions.gnome.org/extension-data/caffeinepatapon.info.v37.shell-extension.zip"
+    gnome_extension_install "sound-output-device-chooser@kgshank.net" "https://extensions.gnome.org/extension-data/sound-output-device-chooserkgshank.net.v35.shell-extension.zip"
+    gnome_extension_install "dash-to-panel@jderose9.github.com" "https://extensions.gnome.org/extension-data/dash-to-paneljderose9.github.com.v40.shell-extension.zip"
+
     snap_install "code" "classic"
     snap_install "intellij-idea-community" "classic"
     snap_install "signal-desktop"
@@ -112,6 +116,22 @@ snap_install() (
         fi
     else
         echo "$prefix_skipped $package_name installation skipped"
+    fi
+)
+
+gnome_extension_install() (
+    extension_name=$1
+    download_path=$2
+
+    if _should_proceed "Install $extension_name"; then
+        wget -O "$HOME/$extension_name.zip" "$download_path"
+
+        gnome-extensions install "$HOME/$extension_name.zip"
+        gnome-extensions enable "$extension_name"
+
+        rm "$HOME/$extension_name.zip"
+    else
+        echo "$prefix_skipped $extension_name installation skipped"
     fi
 )
 
