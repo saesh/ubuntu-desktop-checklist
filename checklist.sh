@@ -21,7 +21,6 @@ main() {
     apt_install "docker"
     apt_install "docker-compose"
     apt_install "fish" "ppa:fish-shell/release-3"
-    apt_install "ffmpeg"
     apt_install "fonts-mononoki"
     apt_install "git"
     apt_install "git-lfs"
@@ -52,7 +51,7 @@ main() {
                               "ms-azuretools.vscode-docker"
 
     install_fzf
-    install_youtubedl
+    install_youtubedl "ffmpeg"
 
     echo
 
@@ -222,11 +221,13 @@ install_fzf() (
 )
 
 install_youtubedl() (
+    dependency=$1
     package_name="youtube-dl"
     url="https://yt-dl.org/downloads/latest/youtube-dl"
     destination="/usr/local/bin/youtube-dl"
 
     if _should_proceed "Install $package_name"; then
+        _install_with_apt "$dependency"
         sudo wget -O "$destination" -q "$url" && \
         sudo chmod +x "$destination"
     else
