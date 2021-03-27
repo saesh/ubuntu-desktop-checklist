@@ -52,6 +52,7 @@ main() {
                               "ms-azuretools.vscode-docker"
 
     install_fzf
+    install_youtubedl
 
     echo
 
@@ -218,6 +219,20 @@ install_fzf() (
         echo "$prefix_skipped $package_name installation skipped"
     fi
     echo
+)
+
+install_youtubedl() (
+    package_name="youtube-dl"
+    url="https://yt-dl.org/downloads/latest/youtube-dl"
+    destination="/usr/local/bin/youtube-dl"
+
+    if _should_proceed "Install $package_name"; then
+        sudo wget -O "$destination" -q "$url" && \
+        sudo chmod +x "$destination"
+    else
+        echo "$prefix_skipped $package_name installation skipped"
+    fi
+    
 )
 
 set_report_only() (
