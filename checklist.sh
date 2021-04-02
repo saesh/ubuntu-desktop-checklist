@@ -52,7 +52,8 @@ main() {
                               "ms-azuretools.vscode-docker" \
                               "usernamehw.errorlens" \
                               "timonwong.shellcheck" \
-                              "wayou.vscode-todo-highlight"
+                              "wayou.vscode-todo-highlight" \
+                              "coenraads.bracket-pair-colorizer-2"
 
     install_fzf
     install_youtubedl "ffmpeg"
