@@ -50,7 +50,8 @@ main() {
                               "sainnhe.sonokai" \
                               "golang.go" \
                               "ms-azuretools.vscode-docker" \
-                              "usernamehw.errorlens"
+                              "usernamehw.errorlens" \
+                              "timonwong.shellcheck"
 
     install_fzf
     install_youtubedl "ffmpeg"
