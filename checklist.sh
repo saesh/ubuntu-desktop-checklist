@@ -51,7 +51,8 @@ main() {
                               "golang.go" \
                               "ms-azuretools.vscode-docker" \
                               "usernamehw.errorlens" \
-                              "timonwong.shellcheck"
+                              "timonwong.shellcheck" \
+                              "wayou.vscode-todo-highlight"
 
     install_fzf
     install_youtubedl "ffmpeg"
