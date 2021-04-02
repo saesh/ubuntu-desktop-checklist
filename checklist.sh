@@ -49,7 +49,8 @@ main() {
     install_vscode_extensions "vscode-icons-team.vscode-icons" \
                               "sainnhe.sonokai" \
                               "golang.go" \
-                              "ms-azuretools.vscode-docker"
+                              "ms-azuretools.vscode-docker" \
+                              "usernamehw.errorlens"
 
     install_fzf
     install_youtubedl "ffmpeg"
