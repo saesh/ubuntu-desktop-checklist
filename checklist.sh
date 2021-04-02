@@ -28,6 +28,7 @@ main() {
     apt_install "gnome-shell-extensions"
     apt_install "htop"
     apt_install "vim"
+    apt_install "zathura"
 
     gnome_extension_install "caffeine@patapon.info" "https://extensions.gnome.org/extension-data/caffeinepatapon.info.v37.shell-extension.zip"
     gnome_extension_install "sound-output-device-chooser@kgshank.net" "https://extensions.gnome.org/extension-data/sound-output-device-chooserkgshank.net.v35.shell-extension.zip"
