@@ -58,6 +58,7 @@ main() {
     install_youtubedl "ffmpeg"
 
     link_dotfile "vimrc" "$HOME/.vimrc"
+    link_dotfile "config.fish" "$HOME/.config/fish/config.fish"
 
     echo
 
