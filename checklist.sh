@@ -59,6 +59,7 @@ main() {
 
     link_dotfile "vimrc" "$HOME/.vimrc"
     link_dotfile "config.fish" "$HOME/.config/fish/config.fish"
+    link_dotfile "fishfile" "$HOME/.config/fish/fishfile"
 
     echo
 
