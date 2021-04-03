@@ -57,6 +57,8 @@ main() {
     install_fzf
     install_youtubedl "ffmpeg"
 
+    link_dotfile "vimrc" "$HOME/.vimrc"
+
     echo
 
     echo   "==================="
@@ -263,6 +265,17 @@ report_snap_installation() (
         echo "$prefix_done $package_name"
     else
         echo "$prefix_missing $package_name"
+    fi
+)
+
+link_dotfile() (
+    dotfile_name="$1"
+    target="$2"
+
+    if _should_proceed "Link $dotfile_name"; then
+        _link_dotfile "$(pwd)/dotfiles/$dotfile_name" "$target"
+    else
+        echo "$prefix_skipped $dotfile_name dotfile linking skipped"
     fi
 )
 
