@@ -46,7 +46,6 @@ main() {
 
     install_iosevka_font
     install_pop_os_shell "node-typescript"
-    
     install_vscode_extensions "vscode-icons-team.vscode-icons" \
                               "sainnhe.sonokai" \
                               "golang.go" \
@@ -55,7 +54,6 @@ main() {
                               "timonwong.shellcheck" \
                               "wayou.vscode-todo-highlight" \
                               "coenraads.bracket-pair-colorizer-2"
-
     install_fzf
     install_youtubedl "ffmpeg"
 
