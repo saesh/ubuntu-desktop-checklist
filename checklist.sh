@@ -20,6 +20,7 @@ main() {
     apt_install "curl"
     apt_install "docker"
     apt_install "docker-compose"
+    apt_install "exa"
     apt_install "fish" "ppa:fish-shell/release-3"
     apt_install "fonts-mononoki"
     apt_install "git"
