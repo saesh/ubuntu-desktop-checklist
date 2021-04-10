@@ -1,5 +1,10 @@
 #!/bin/sh
 
+# shellcheck disable=SC1091
+. ./lib/shflags
+
+DEFINE_boolean 'report' false 'only show installation report' 'r'
+
 set -e
 
 prefix_question="🤖"
@@ -7,11 +12,8 @@ prefix_done="✅"
 prefix_skipped="⏭ "
 prefix_warning="🟡"
 prefix_missing="❌"
-report_only=false
 
 main() {
-    set_report_only "$1"
-
     echo   "==========="
     echo   "📦 Packages"
     printf "===========\n"
@@ -41,7 +43,7 @@ main() {
     snap_install "signal-desktop"
     snap_install "spotify"
     
-    if $report_only; then
+    if is_report_only; then
         exit 0
     fi
 
@@ -83,7 +85,7 @@ apt_install() (
     package_name=$1
     ppa_dependency=$2
 
-    if $report_only; then
+    if is_report_only; then
         report_apt_installation "$package_name"
         return
     fi
@@ -107,7 +109,7 @@ snap_install() (
     package_name=$1
     is_classic=$2
 
-    if [ $report_only = true ]; then
+    if is_report_only; then
         report_snap_installation "$package_name"
         return
     fi
@@ -132,6 +134,11 @@ snap_install() (
 gnome_extension_install() (
     extension_name=$1
     download_path=$2
+
+    if is_report_only; then
+        report_gnome_extension_installation "$extension_name"
+        return
+    fi
 
     if _should_proceed "Install $extension_name"; then
         wget -O "$HOME/$extension_name.zip" "$download_path"
@@ -246,11 +253,9 @@ install_youtubedl() (
     
 )
 
-set_report_only() (
-    if [ "$1" = "report" ]; then
-        report_only=true
-    fi
-)
+is_report_only() {
+    [ "$FLAGS_report" = "${FLAGS_TRUE}" ] && return 0 || return 1
+}
 
 report_apt_installation() (
     package_name=$1
@@ -269,6 +274,16 @@ report_snap_installation() (
         echo "$prefix_done $package_name"
     else
         echo "$prefix_missing $package_name"
+    fi
+)
+
+report_gnome_extension_installation() (
+    extension_name=$1
+
+    if _is_gnome_extension_installed "$extension_name"; then
+        echo "$prefix_done $extension_name"
+    else
+        echo "$prefix_missing $extension_name"
     fi
 )
 
@@ -317,6 +332,13 @@ _is_installed_with_snap() (
     return "$((1 - count))"
 )
 
+_is_gnome_extension_installed() (
+    extension_name=$1
+    # flip 1 and 0; grep count of 1 means it is installed; thus 0 for success should be returned
+    count="$(gnome-extensions show "$extension_name" 2>/dev/null | grep -c "ENABLED")"
+    return "$((1 - count))"
+)
+
 _download_and_unzip() (
     url=$1
     target_dir=$2
@@ -349,4 +371,6 @@ _link_dotfile() (
     ln -s "$from" "$to"
 )
 
+FLAGS "$@" || exit $?
+eval set -- "${FLAGS_ARGV}"
 main "$@"
