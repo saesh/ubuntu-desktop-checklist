@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # shellcheck disable=SC1091
-. ./lib/shflags
+. ./deps/shflags
 
 DEFINE_boolean 'report' false 'only show installation report' 'r'
 DEFINE_boolean 'skip' false 'skip installed items' 's'
