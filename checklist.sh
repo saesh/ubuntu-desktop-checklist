@@ -4,6 +4,7 @@
 . ./lib/shflags
 
 DEFINE_boolean 'report' false 'only show installation report' 'r'
+DEFINE_boolean 'skip' false 'skip installed items' 's'
 
 set -e
 
@@ -84,9 +85,13 @@ main() {
 apt_install() (
     package_name=$1
     ppa_dependency=$2
-
+   
     if is_report_only; then
         report_apt_installation "$package_name"
+        return
+    fi
+
+    if is_skip_installed && _is_installed_with_apt "$package_name"; then
         return
     fi
 
@@ -113,6 +118,10 @@ snap_install() (
         report_snap_installation "$package_name"
         return
     fi
+
+    if is_skip_installed && _is_installed_with_snap "$package_name"; then
+        return
+    fi
     
     if _should_proceed "Install $package_name ($( _is_installed_with_snap "$package_name" && echo "$prefix_done" || echo "$prefix_missing" ))"; then
         if [ "$is_classic" = "classic" ]; then
@@ -137,6 +146,10 @@ gnome_extension_install() (
 
     if is_report_only; then
         report_gnome_extension_installation "$extension_name"
+        return
+    fi
+
+    if is_skip_installed && _is_gnome_extension_installed "$extension_name"; then
         return
     fi
 
@@ -255,6 +268,10 @@ install_youtubedl() (
 
 is_report_only() {
     [ "$FLAGS_report" = "${FLAGS_TRUE}" ] && return 0 || return 1
+}
+
+is_skip_installed() {
+    [ "$FLAGS_skip" = "${FLAGS_TRUE}" ] && return 0 || return 1
 }
 
 report_apt_installation() (
