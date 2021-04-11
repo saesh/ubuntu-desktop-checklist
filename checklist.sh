@@ -57,7 +57,8 @@ main() {
                               "usernamehw.errorlens" \
                               "timonwong.shellcheck" \
                               "wayou.vscode-todo-highlight" \
-                              "coenraads.bracket-pair-colorizer-2"
+                              "coenraads.bracket-pair-colorizer-2" \
+                              "skyapps.fish-vscode"
     install_fzf
     install_youtubedl "ffmpeg"
     install_starship_prompt
