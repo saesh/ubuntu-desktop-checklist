@@ -60,12 +60,14 @@ main() {
                               "coenraads.bracket-pair-colorizer-2"
     install_fzf
     install_youtubedl "ffmpeg"
+    install_starship_prompt
 
     link_dotfile "vimrc" "$HOME/.vimrc"
     link_dotfile "fish/config.fish" "$HOME/.config/fish/config.fish"
     link_dotfile "fish/fishfile" "$HOME/.config/fish/fishfile"
     link_dotfile "fish/go.fish" "$HOME/.config/fish/go.fish"
     link_dotfile "fonts.conf" "$HOME/.config/fontconfig/fonts.conf"
+    link_dotfile "starship.toml" "$HOME/.config/starship.toml"
 
     echo
 
@@ -265,6 +267,16 @@ install_youtubedl() (
         echo "$prefix_skipped $package_name installation skipped"
     fi
     
+)
+
+install_starship_prompt() (
+    package_name="starship prompt"
+
+    if _should_proceed "Install $package_name"; then
+        sh -c "$(curl -fsSL https://starship.rs/install.sh)"
+    else
+        echo "$prefix_skipped $package_name installation skipped"
+    fi
 )
 
 is_report_only() {

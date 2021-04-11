@@ -55,3 +55,8 @@ set -U fish_user_paths $fish_user_paths $HOME/.local/bin
 set -U fish_user_paths $fish_user_paths /usr/local/go/bin
 set -U fish_user_paths $fish_user_paths $HOME/go/bin
 set -U fish_user_paths $fish_user_paths /usr/local/protobuf/bin
+
+# starship prompt
+if type -sq starship
+    starship init fish | source
+end
