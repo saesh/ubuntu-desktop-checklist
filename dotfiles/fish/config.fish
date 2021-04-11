@@ -4,6 +4,7 @@ set -Ux EDITOR vim
 
 # enhancd settings
 set -Ux ENHANCD_HOOK_AFTER_CD "la"
+set -Ux ENHANCD_DISABLE_HOME 1
 
 # Base16 Shell
 if status --is-interactive
@@ -14,11 +15,6 @@ end
 # FZF key bindings
 if type -q fzf_key_bindings
    fzf_key_bindings
-end
-
-# load local fish config
-if test -e ~/.config/fish/local.config.fish
-    source ~/.config/fish/local.config.fish
 end
 
 # use bat for colored man pages
@@ -43,19 +39,19 @@ if type -sq exa
 end
 
 # functions
-#function vf
-#    command fzf | xargs -o $EDITOR
-#end
+function vf
+    command fzf | xargs -o $EDITOR
+end
 
-# set PATH
-# used by epr (terminal epub reader)
-set PATH ~/.local/bin $PATH
-# texlive
-#set PATH /usr/local/texlive/2020/bin/x86_64-linux $PATH
-#set INFOPATH /usr/local/texlive/2020/texmf-dist/doc/info $INFOPATH
+# load local fish config
+if test -e ~/.config/fish/local.config.fish
+    source ~/.config/fish/local.config.fish
+end
 
-# MANPATH
-#set -gx MANPATH (manpath | string split :)
-#set -gx MANPATH /usr/local/texlive/2020/texmf-dist/doc/man $MANPATH ":"
+# PATHS
+set -U fish_user_paths $fish_user_paths $HOME/.local/bin
 
-set PATH /usr/local/go/bin $PATH
+# go
+set -U fish_user_paths $fish_user_paths /usr/local/go/bin
+set -U fish_user_paths $fish_user_paths $HOME/go/bin
+set -U fish_user_paths $fish_user_paths /usr/local/protobuf/bin
