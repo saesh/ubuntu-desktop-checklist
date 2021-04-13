@@ -62,6 +62,7 @@ main() {
     install_fzf
     install_youtubedl "ffmpeg"
     install_starship_prompt
+    install_trans "gawk"
 
     link_dotfile "vimrc" "$HOME/.vimrc"
     link_dotfile "fish/config.fish" "$HOME/.config/fish/config.fish"
@@ -278,6 +279,20 @@ install_starship_prompt() (
     else
         echo "$prefix_skipped $package_name installation skipped"
     fi
+)
+
+install_trans() (
+    dependency=$1
+    package_name="trans"
+    url="https://git.io/trans"
+    destination="/usr/local/bin/trans"
+
+    if _should_proceed "Install $package_name"; then
+        sudo wget -O "$destination" -q "$url" && \
+        sudo chmod +x "$destination"
+    else
+        echo "$prefix_skipped $package_name installation skipped"
+    fi 
 )
 
 is_report_only() {
