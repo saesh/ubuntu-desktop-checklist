@@ -70,6 +70,7 @@ main() {
     link_dotfile "fish/go.fish" "$HOME/.config/fish/go.fish"
     link_dotfile "fonts.conf" "$HOME/.config/fontconfig/fonts.conf"
     link_dotfile "starship.toml" "$HOME/.config/starship.toml"
+    link_dotfile "fish/wttr.fish" "$HOME/.config/fish/functions/wttr.fish"
 
     echo
 
