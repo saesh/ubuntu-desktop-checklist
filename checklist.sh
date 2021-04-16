@@ -74,6 +74,7 @@ main() {
     link_dotfile "fonts.conf" "$HOME/.config/fontconfig/fonts.conf"
     link_dotfile "starship.toml" "$HOME/.config/starship.toml"
     link_dotfile "fish/wttr.fish" "$HOME/.config/fish/functions/wttr.fish"
+    link_dotfile "regolith/Xresources" "$HOME/.config/regolith/Xresources"
 
     echo
 
