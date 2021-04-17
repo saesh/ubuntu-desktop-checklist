@@ -66,6 +66,7 @@ main() {
     install_youtubedl "ffmpeg"
     install_starship_prompt
     install_trans "gawk"
+    install_greenclip
 
     link_dotfile "vimrc" "$HOME/.vimrc"
     link_dotfile "fish/config.fish" "$HOME/.config/fish/config.fish"
@@ -75,6 +76,7 @@ main() {
     link_dotfile "starship.toml" "$HOME/.config/starship.toml"
     link_dotfile "fish/wttr.fish" "$HOME/.config/fish/functions/wttr.fish"
     link_dotfile "regolith/Xresources" "$HOME/.config/regolith/Xresources"
+    link_dotfile "regolith/i3/config" "$HOME/.config/regolith/i3/config"
 
     echo
 
@@ -298,6 +300,19 @@ install_trans() (
     else
         echo "$prefix_skipped $package_name installation skipped"
     fi 
+)
+
+install_greenclip() (
+    package_name="greenclip"
+    url="https://github.com/erebe/greenclip/releases/download/3.3/greenclip"
+    destination="/usr/local/bin/greenclip"
+
+    if _should_proceed "Install $package_name"; then
+        sudo wget -O "$destination" -q "$url" && \
+        sudo chmod +x "$destination"
+    else
+        echo "$prefix_skipped $package_name installation skipped"
+    fi
 )
 
 is_report_only() {
