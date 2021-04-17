@@ -36,6 +36,8 @@ end
 # exa, ls alternative
 if type -sq exa
     alias ls='exa'
+    alias ll='exa --long --git'
+    alias la='exa --all --long --git'
 end
 
 # functions
