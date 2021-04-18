@@ -26,6 +26,7 @@ main() {
     apt_install "exa"
     apt_install "fish" "ppa:fish-shell/release-3"
     apt_install "fonts-mononoki"
+    apt_install "fonts-lato"
     apt_install "git"
     apt_install "git-lfs"
     apt_install "gnome-tweaks"
