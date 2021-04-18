@@ -31,9 +31,13 @@ main() {
     apt_install "gnome-tweaks"
     apt_install "gnome-shell-extensions"
     apt_install "htop"
+
+    # regolith setup
     apt_install "regolith-desktop-standard" "ppa:regolith-linux/release"
     apt_install "i3xrocks-volume"
+    apt_install "i3xrocks-memory"
     apt_install "pavucontrol"
+    
     apt_install "vim"
     apt_install "zathura"
 
