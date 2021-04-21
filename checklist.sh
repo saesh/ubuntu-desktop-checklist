@@ -29,6 +29,7 @@ main() {
     apt_install "fonts-lato"
     apt_install "git"
     apt_install "git-lfs"
+    apt_install "irssi"
     apt_install "gnome-tweaks"
     apt_install "gnome-shell-extensions"
     apt_install "htop"
