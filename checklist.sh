@@ -82,6 +82,7 @@ main() {
     link_dotfile "fish/wttr.fish" "$HOME/.config/fish/functions/wttr.fish"
     link_dotfile "regolith/Xresources" "$HOME/.config/regolith/Xresources"
     link_dotfile "regolith/i3/config" "$HOME/.config/regolith/i3/config"
+    link_dotfile "bin/toggle-audio" "$HOME/.local/bin/toggle-audio"
 
     echo
 
