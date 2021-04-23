@@ -51,6 +51,7 @@ main() {
     snap_install "intellij-idea-community" "classic"
     snap_install "signal-desktop"
     snap_install "spotify"
+    snap_install "spt"
     
     if is_report_only; then
         exit 0
