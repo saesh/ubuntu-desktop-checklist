@@ -48,6 +48,7 @@ main() {
     gnome_extension_install "clipboard-indicator@tudmotu.com" "https://extensions.gnome.org/extension-data/clipboard-indicatortudmotu.com.v37.shell-extension.zip"
 
     snap_install "code" "classic"
+    snap_install "foliate"
     snap_install "intellij-idea-community" "classic"
     snap_install "signal-desktop"
     snap_install "spotify"
