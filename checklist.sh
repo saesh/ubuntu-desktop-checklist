@@ -62,6 +62,7 @@ main() {
     fi
 
     install_iosevka_font
+    install_MaterialIcons_font
     install_pop_os_shell "node-typescript"
     install_vscode_extensions "vscode-icons-team.vscode-icons" \
                               "sainnhe.sonokai" \
@@ -210,6 +211,26 @@ install_iosevka_font() (
     if _should_proceed "Install $package_name"; then
         _download_and_unzip "https://github.com/be5invis/Iosevka/releases/download/v5.0.5/ttf-iosevka-ss08-5.0.5.zip" "$HOME/.local/share/fonts"
         _download_and_unzip "https://github.com/be5invis/Iosevka/releases/download/v5.0.5/ttf-iosevka-term-ss08-5.0.5.zip" "$HOME/.local/share/fonts"
+        return_code=$?
+        if [ "$return_code" -eq "0" ]; then
+            echo "$prefix_done $package_name installed"
+        else 
+            echo "$prefix_warning $package_name could not be installed"
+        fi
+    else
+        echo "$prefix_skipped $package_name installation skipped"
+    fi
+)
+
+install_MaterialIcons_font() (
+    package_name="Material Icons font"
+    if _should_proceed "Install $package_name"; then
+        
+        link_dotfile "fonts/MaterialIcons-Regular.ttf" "$HOME/.local/share/fonts"
+        link_dotfile "fonts/MaterialIconsOutlined-Regular.ttf" "$HOME/.local/share/fonts"
+        link_dotfile "fonts/MaterialIconsRound-Regular.ttf" "$HOME/.local/share/fonts"
+        sudo fc-cache -f
+
         return_code=$?
         if [ "$return_code" -eq "0" ]; then
             echo "$prefix_done $package_name installed"
