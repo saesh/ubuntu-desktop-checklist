@@ -28,6 +28,7 @@ main() {
     apt_install "fonts-mononoki"
     apt_install "fonts-lato"
     apt_install "fonts-font-awesome"
+    apt_install "fonts-hack"
     apt_install "git"
     apt_install "git-lfs"
     apt_install "gnome-tweaks"
