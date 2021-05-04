@@ -29,16 +29,19 @@ main() {
     apt_install "fonts-lato"
     apt_install "git"
     apt_install "git-lfs"
-    apt_install "irssi"
     apt_install "gnome-tweaks"
     apt_install "gnome-shell-extensions"
+    apt_install "gucharmap"
     apt_install "htop"
+    apt_install "irssi"
+    
 
     # regolith setup
     apt_install "regolith-desktop-standard" "ppa:regolith-linux/release"
     apt_install "i3xrocks-volume"
     apt_install "i3xrocks-memory"
     apt_install "pavucontrol"
+    apt_install "polybar"
 
     apt_install "vim"
 
@@ -85,6 +88,7 @@ main() {
     link_dotfile "regolith/Xresources" "$HOME/.config/regolith/Xresources"
     link_dotfile "regolith/i3/config" "$HOME/.config/regolith/i3/config"
     link_dotfile "bin/toggle-audio" "$HOME/.local/bin/toggle-audio"
+    link_dotfile "polybar" "$HOME/.config/polybar"
 
     echo
 
