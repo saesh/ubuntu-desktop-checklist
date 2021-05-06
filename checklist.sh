@@ -91,6 +91,8 @@ main() {
     link_dotfile "regolith/Xresources" "$HOME/.config/regolith/Xresources"
     link_dotfile "regolith/i3/config" "$HOME/.config/regolith/i3/config"
     link_dotfile "bin/toggle-audio" "$HOME/.local/bin/toggle-audio"
+    link_dotfile "bin/ti.sh" "$HOME/.local/bin/ti"
+    link_dotfile "bin/to.sh" "$HOME/.local/bin/to"
     link_dotfile "polybar" "$HOME/.config/polybar"
 
     echo
