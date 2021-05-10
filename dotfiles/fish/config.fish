@@ -27,6 +27,7 @@ abbr v "$EDITOR"
 abbr vd "$EDITOR ~/did.txt"
 abbr vw "vim -c VimwikiIndex"
 abbr ytd "youtube-dl"
+abbr tf "terraform"
 
 # aliases
 if type -q 'youtube-dl'
