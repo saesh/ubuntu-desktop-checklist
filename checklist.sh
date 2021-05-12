@@ -74,7 +74,8 @@ main() {
                               "timonwong.shellcheck" \
                               "wayou.vscode-todo-highlight" \
                               "coenraads.bracket-pair-colorizer-2" \
-                              "skyapps.fish-vscode"
+                              "skyapps.fish-vscode" \
+                              "hashicorp.terraform"
     install_fzf
     install_youtubedl "ffmpeg"
     install_starship_prompt
