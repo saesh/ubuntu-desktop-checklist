@@ -72,7 +72,7 @@ main() {
                               "ms-azuretools.vscode-docker" \
                               "usernamehw.errorlens" \
                               "timonwong.shellcheck" \
-                              "wayou.vscode-todo-highlight" \
+                              "aaron-bond.better-comments" \
                               "coenraads.bracket-pair-colorizer-2" \
                               "skyapps.fish-vscode" \
                               "hashicorp.terraform"
