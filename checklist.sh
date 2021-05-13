@@ -36,7 +36,7 @@ main() {
     apt_install "gucharmap"
     apt_install "htop"
     apt_install "irssi"
-    
+
 
     # regolith setup
     apt_install "regolith-desktop-standard" "ppa:regolith-linux/release"
@@ -58,7 +58,7 @@ main() {
     snap_install "signal-desktop"
     snap_install "spotify"
     snap_install "spt"
-    
+
     if is_report_only; then
         exit 0
     fi
@@ -95,6 +95,7 @@ main() {
     link_dotfile "bin/ti.sh" "$HOME/.local/bin/ti"
     link_dotfile "bin/to.sh" "$HOME/.local/bin/to"
     link_dotfile "polybar" "$HOME/.config/polybar"
+    link_dotfile "alacritty.yml" "$HOME/.config/alacritty/alacritty.yml"
 
     echo
 
@@ -115,7 +116,7 @@ main() {
 apt_install() (
     package_name=$1
     ppa_dependency=$2
-   
+
     if is_report_only; then
         report_apt_installation "$package_name"
         return
@@ -132,7 +133,7 @@ apt_install() (
 
         if _install_with_apt "$package_name"; then
             echo "$prefix_done $package_name installed"
-        else 
+        else
             echo "$prefix_warning $package_name could not be installed"
         fi
     else
@@ -152,17 +153,17 @@ snap_install() (
     if is_skip_installed && _is_installed_with_snap "$package_name"; then
         return
     fi
-    
+
     if _should_proceed "Install $package_name ($( _is_installed_with_snap "$package_name" && echo "$prefix_done" || echo "$prefix_missing" ))"; then
         if [ "$is_classic" = "classic" ]; then
             snap install "$package_name" --classic
         else
             snap install "$package_name"
-        fi 
+        fi
         return_code=$?
         if [ "$return_code" -eq "0" ]; then
             echo "$prefix_done $package_name installed"
-        else 
+        else
             echo "$prefix_warning $package_name could not be installed"
         fi
     else
@@ -203,7 +204,7 @@ setting() (
         return_code=$?
         if [ "$return_code" -eq "0" ]; then
             echo "$prefix_done Done"
-        else 
+        else
             echo "$prefix_warning Something went wrong"
         fi
     else
@@ -219,7 +220,7 @@ install_iosevka_font() (
         return_code=$?
         if [ "$return_code" -eq "0" ]; then
             echo "$prefix_done $package_name installed"
-        else 
+        else
             echo "$prefix_warning $package_name could not be installed"
         fi
     else
@@ -230,7 +231,7 @@ install_iosevka_font() (
 install_MaterialIcons_font() (
     package_name="Material Icons font"
     if _should_proceed "Install $package_name"; then
-        
+
         link_dotfile "fonts/MaterialIcons-Regular.ttf" "$HOME/.local/share/fonts"
         link_dotfile "fonts/MaterialIconsOutlined-Regular.ttf" "$HOME/.local/share/fonts"
         link_dotfile "fonts/MaterialIconsRound-Regular.ttf" "$HOME/.local/share/fonts"
@@ -239,7 +240,7 @@ install_MaterialIcons_font() (
         return_code=$?
         if [ "$return_code" -eq "0" ]; then
             echo "$prefix_done $package_name installed"
-        else 
+        else
             echo "$prefix_warning $package_name could not be installed"
         fi
     else
@@ -261,7 +262,7 @@ install_pop_os_shell() (
 
 install_vscode_extensions() (
     package_name="VScode extensions"
-    
+
     if ! _is_installed_with_snap "code"; then
         return 0
     fi
@@ -285,7 +286,7 @@ install_fzf() (
     if _should_proceed "Install $package_name"; then
         # fzf
         git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install --completion --key-bindings --update-rc || echo "$package_name already installed"
-        
+
         # fd for fzf.fish
         _download_and_dpkg "https://github.com/sharkdp/fd/releases/download/v${fd_version}/fd-musl_${fd_version}_amd64.deb"
 
@@ -313,7 +314,7 @@ install_youtubedl() (
     else
         echo "$prefix_skipped $package_name installation skipped"
     fi
-    
+
 )
 
 install_starship_prompt() (
@@ -337,7 +338,7 @@ install_trans() (
         sudo chmod +x "$destination"
     else
         echo "$prefix_skipped $package_name installation skipped"
-    fi 
+    fi
 )
 
 install_greenclip() (
@@ -469,7 +470,7 @@ _link_dotfile() (
     from=$1
     to=$2
     target_path=$(dirname "$to")
-    
+
     mkdir -p "$target_path"
 
     ln -s "$from" "$to"
