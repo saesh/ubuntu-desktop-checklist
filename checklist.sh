@@ -96,6 +96,7 @@ main() {
     link_dotfile "bin/to.sh" "$HOME/.local/bin/to"
     link_dotfile "polybar" "$HOME/.config/polybar"
     link_dotfile "alacritty.yml" "$HOME/.config/alacritty/alacritty.yml"
+    link_dotfile "dunstrc" "$HOME/.config/dunst/dunstrc"
 
     echo
 
