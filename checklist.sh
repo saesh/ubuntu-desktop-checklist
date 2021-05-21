@@ -37,7 +37,6 @@ main() {
     apt_install "htop"
     apt_install "irssi"
 
-
     # regolith setup
     apt_install "regolith-desktop-standard" "ppa:regolith-linux/release"
     apt_install "i3xrocks-volume"
@@ -83,20 +82,28 @@ main() {
     install_greenclip
 
     link_dotfile "vimrc" "$HOME/.vimrc"
+
     link_dotfile "fish/config.fish" "$HOME/.config/fish/config.fish"
-    link_dotfile "fish/fishfile" "$HOME/.config/fish/fishfile"
-    link_dotfile "fish/go.fish" "$HOME/.config/fish/go.fish"
+    link_dotfile "fish/fish_plugins" "$HOME/.config/fish/fish_plugins"
     link_dotfile "fish/base16-shell-theme.fish" "$HOME/.config/fish/functions/base16-shell-theme.fish"
-    link_dotfile "fonts.conf" "$HOME/.config/fontconfig/fonts.conf"
-    link_dotfile "starship.toml" "$HOME/.config/starship.toml"
     link_dotfile "fish/wttr.fish" "$HOME/.config/fish/functions/wttr.fish"
+
+    link_dotfile "fonts.conf" "$HOME/.config/fontconfig/fonts.conf"
+
+    link_dotfile "starship.toml" "$HOME/.config/starship.toml"
+    
     link_dotfile "regolith/Xresources" "$HOME/.config/regolith/Xresources"
     link_dotfile "regolith/i3/config" "$HOME/.config/regolith/i3/config"
+
     link_dotfile "bin/toggle-audio" "$HOME/.local/bin/toggle-audio"
+
     link_dotfile "bin/ti.sh" "$HOME/.local/bin/ti"
     link_dotfile "bin/to.sh" "$HOME/.local/bin/to"
+
     link_dotfile "polybar" "$HOME/.config/polybar"
+
     link_dotfile "alacritty.yml" "$HOME/.config/alacritty/alacritty.yml"
+
     link_dotfile "dunstrc" "$HOME/.config/dunst/dunstrc"
 
     echo
