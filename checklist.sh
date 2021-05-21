@@ -86,6 +86,7 @@ main() {
     link_dotfile "fish/config.fish" "$HOME/.config/fish/config.fish"
     link_dotfile "fish/fishfile" "$HOME/.config/fish/fishfile"
     link_dotfile "fish/go.fish" "$HOME/.config/fish/go.fish"
+    link_dotfile "fish/base16-shell-theme.fish" "$HOME/.config/fish/functions/base16-shell-theme.fish"
     link_dotfile "fonts.conf" "$HOME/.config/fontconfig/fonts.conf"
     link_dotfile "starship.toml" "$HOME/.config/starship.toml"
     link_dotfile "fish/wttr.fish" "$HOME/.config/fish/functions/wttr.fish"
