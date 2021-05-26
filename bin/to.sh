@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
 
-timeclockFile=${TIMELOG:-${HOME}/.${USER}.timeclock}
-
-echo "o $(date '+%Y-%m-%d %H:%M:%S')" >> "$timeclockFile"
+curl -XPOST "https://${TIMETRACKER_USERNAME}:${TIMETRACKER_PASSWORD}@${TIMETRACKER_URL}/stop" \
+     -d '{"timestamp":"'"$(date '+%Y-%m-%d %H:%M:%S')"'"}'
