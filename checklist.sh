@@ -80,6 +80,7 @@ main() {
     install_starship_prompt
     install_trans "gawk"
     install_greenclip
+    install_base16_theme_repositories
 
     link_dotfile "vimrc" "$HOME/.vimrc"
 
@@ -358,6 +359,17 @@ install_greenclip() (
     if _should_proceed "Install $package_name"; then
         sudo wget -O "$destination" -q "$url" && \
         sudo chmod +x "$destination"
+    else
+        echo "$prefix_skipped $package_name installation skipped"
+    fi
+)
+
+install_base16_theme_repositories() (
+    package_name="base16-shell repositories"
+    if _should_proceed "Install $package_name"; then
+        git clone https://github.com/fnune/base16-shell.git ~/.config/base16-shell
+        git clone https://github.com/fnune/base16-fzf.git ~/.config/base16-fzf
+        git clone https://github.com/saesh/base16-fish.git ~/.config/base16-fish
     else
         echo "$prefix_skipped $package_name installation skipped"
     fi
