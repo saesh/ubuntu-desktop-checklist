@@ -49,12 +49,11 @@ if test -e ~/.config/fish/local.config.fish
 end
 
 # PATHS
-set -U fish_user_paths $fish_user_paths $HOME/.local/bin
+fish_add_path $HOME/.local/bin
 
 # go
-set -U fish_user_paths $fish_user_paths /usr/local/go/bin
-set -U fish_user_paths $fish_user_paths $HOME/go/bin
-set -U fish_user_paths $fish_user_paths /usr/local/protobuf/bin
+fish_add_path /usr/local/go/bin
+fish_add_path $HOME/go/bin
 
 # starship prompt
 if type -sq starship
