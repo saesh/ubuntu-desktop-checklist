@@ -6,12 +6,6 @@ set -Ux EDITOR vim
 set -Ux ENHANCD_HOOK_AFTER_CD "la"
 set -Ux ENHANCD_DISABLE_HOME 1
 
-# Base16 Shell
-if status --is-interactive
-    set BASE16_SHELL "$HOME/.config/base16-shell/"
-    source "$BASE16_SHELL/profile_helper.fish"
-end
-
 # FZF key bindings
 if type -q fzf_key_bindings
    fzf_key_bindings
