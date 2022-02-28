@@ -9,6 +9,7 @@ set -Ux ENHANCD_DISABLE_HOME 1
 # FZF key bindings
 if type -q fzf_key_bindings
    fzf_key_bindings
+   set -Ux FZF_DEFAULT_OPTS "--color=16"
 end
 
 # use bat for colored man pages
