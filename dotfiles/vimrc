@@ -25,8 +25,7 @@ Plug 'tpope/vim-commentary'
 Plug 'vimwiki/vimwiki'
 
 Plug 'itchyny/lightline.vim' " status bar
-Plug 'chriskempson/base16-vim' " base16 themes
-Plug 'daviesjamie/vim-base16-lightline' " base16 for statusbar
+Plug 'noahfrederick/vim-noctu' " base16 color scheme
 
 Plug 'farmergreg/vim-lastplace'
 Plug 'tpope/vim-sensible'
@@ -122,8 +121,10 @@ call plug#end()
 
     " Lightline
     let g:lightline = {
-      \ 'colorscheme': 'base16',
+      \ 'colorscheme': '16color',
       \ }
+    " gray line in gutter: https://github.com/airblade/vim-gitgutter/issues/759
+    highlight! link SignColumn LineNr
 
     " vim-commentary
     map <C-_> gcc " toggle commen, this is C-/ on linux
