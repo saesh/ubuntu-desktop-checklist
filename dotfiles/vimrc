@@ -72,6 +72,8 @@ call plug#end()
     set undodir=$HOME/.vim/undo
     set undofile
     set undolevels=1000 undoreload=10000
+    " show vertical ruler
+    set colorcolumn=120
 
 " Color scheme
     set background=dark
