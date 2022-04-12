@@ -1,0 +1,4 @@
+[[items]]
+file = "~/.config/alacritty/alacritty.yml"
+template = "alacritty"
+subtemplate = "default-256"
